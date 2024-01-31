@@ -23,4 +23,21 @@ public class StudentService {
 		Optional<Student> student = repository.findById(id);
 		return student.get();
 	}
+	
+	public Student createStudent(Student obj) {
+		return repository.save(obj);
+	}
+	
+	public Student updateStudent(Long id, Student obj) {
+		Student entity = repository.getReferenceById(id);
+		entity.setFullname(obj.getFullname());
+		entity.setEmail(obj.getEmail());
+		entity.setPhone(obj.getPhone());
+		entity.setPassword(obj.getPassword());
+		return repository.save(entity);
+	}
+	
+	public void removeStudent(Long id) {
+		repository.deleteById(id);
+	}
 }
