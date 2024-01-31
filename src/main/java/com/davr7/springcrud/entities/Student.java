@@ -1,7 +1,5 @@
 package com.davr7.springcrud.entities;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +16,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "students")
-public class Student implements Serializable{
+public class Student extends DateAudit {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -30,7 +28,6 @@ public class Student implements Serializable{
 	private String phone;
 	@JsonIgnore
 	private String password;
-	private LocalDateTime createdAt;
 	
 	@OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
 	@JsonIgnore
@@ -45,7 +42,6 @@ public class Student implements Serializable{
 		this.email = email;
 		this.phone = phone;
 		this.password = password;
-		setCreatedAt(LocalDateTime.now());
 	}
 
 	public Long getId() {
@@ -88,18 +84,10 @@ public class Student implements Serializable{
 		this.password = password;
 	}
 	
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
-
-	private void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
-
 	public List<Article> getWrittenArticles() {
 		return writtenArticles;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

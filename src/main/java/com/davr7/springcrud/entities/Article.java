@@ -1,6 +1,5 @@
 package com.davr7.springcrud.entities;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
@@ -13,7 +12,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "articles")
-public class Article implements Serializable {
+public class Article extends DateAudit {
 	private static final long serialVersionUID = 1L;
 
 	@Id
