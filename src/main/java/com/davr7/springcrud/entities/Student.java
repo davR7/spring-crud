@@ -1,12 +1,19 @@
 package com.davr7.springcrud.entities;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,8 +26,15 @@ public class Student implements Serializable{
 	private Long id;
 	private String fullname;
 	private String email;
+	@JsonIgnore
 	private String phone;
+	@JsonIgnore
 	private String password;
+	private LocalDateTime createdAt;
+	
+	@OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<Article> writtenArticles = new LinkedList<>();
 	
 	public Student() {
 	}
@@ -31,6 +45,7 @@ public class Student implements Serializable{
 		this.email = email;
 		this.phone = phone;
 		this.password = password;
+		setCreatedAt(LocalDateTime.now());
 	}
 
 	public Long getId() {
@@ -71,6 +86,18 @@ public class Student implements Serializable{
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	private void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public List<Article> getWrittenArticles() {
+		return writtenArticles;
 	}
 
 	@Override

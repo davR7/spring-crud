@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,14 +23,20 @@ public class Article implements Serializable {
 	private String description;
 	private String content;
 	
+	
+	@ManyToOne
+	@JoinColumn(name="student_id")
+	private Student author;
+	
 	public Article() {
 	}
 
-	public Article(Long id, String title, String description, String content) {
+	public Article(Long id, String title, String description, String content, Student author) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
 		this.content = content;
+		this.author = author;
 	}
 
 	public Long getId() {
@@ -61,6 +69,14 @@ public class Article implements Serializable {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+	
+	public Student getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(Student author) {
+		this.author = author;
 	}
 
 	@Override
