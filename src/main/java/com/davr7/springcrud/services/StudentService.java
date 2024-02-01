@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 
 import com.davr7.springcrud.entities.Student;
 import com.davr7.springcrud.repositories.StudentRepository;
+import com.davr7.springcrud.services.exceptions.ExistingResourceException;
 import com.davr7.springcrud.services.exceptions.ResourceNotFoundException;
 
+import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 
 @Service
@@ -27,8 +29,19 @@ public class StudentService {
 		return student.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
+	public Boolean studentAlreadyExists(String email) {
+		return repository.existsByEmail(email);
+	}
+
 	public Student createStudent(Student obj) {
-		return repository.save(obj);
+		try {
+			if (studentAlreadyExists(obj.getEmail())) {
+				throw new EntityExistsException();
+			}
+			return repository.save(obj);
+		} catch(EntityExistsException e) {
+			throw new ExistingResourceException(obj.getEmail());
+		}
 	}
 
 	public Student updateStudent(Long id, Student obj) {
@@ -51,7 +64,7 @@ public class StudentService {
 				return;
 			}
 			throw new EntityNotFoundException();
-		} catch(EntityNotFoundException e) {
+		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
 		}
 	}
