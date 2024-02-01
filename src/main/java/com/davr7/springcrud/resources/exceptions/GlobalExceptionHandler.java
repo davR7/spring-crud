@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.davr7.springcrud.services.exceptions.ExistingResourceException;
 import com.davr7.springcrud.services.exceptions.ResourceNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,6 +23,15 @@ public class GlobalExceptionHandler {
 		String error = "Resource Not Found";
 		
 		ErrorResponse errResponse = new ErrorResponse(Instant.now(), status, error, e.getMessage() , req.getRequestURI());
+		return ResponseEntity.status(status).body(errResponse);
+	}
+	
+	@ExceptionHandler
+	public ResponseEntity<ErrorResponse> handlerExistingResourceException(ExistingResourceException e, HttpServletRequest req){
+		Integer status = HttpStatus.BAD_REQUEST.value();
+		String error = "Existing Resource";
+		
+		ErrorResponse errResponse = new ErrorResponse(Instant.now(), status, error, e.getMessage(), req.getRequestURI());
 		return ResponseEntity.status(status).body(errResponse);
 	}
 }
