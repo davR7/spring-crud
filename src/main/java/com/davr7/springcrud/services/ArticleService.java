@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.davr7.springcrud.entities.Article;
 import com.davr7.springcrud.repositories.ArticleRepository;
+import com.davr7.springcrud.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class ArticleService {
@@ -21,6 +22,6 @@ public class ArticleService {
 
 	public Article readArticleById(Long id) {
 		Optional<Article> article = repository.findById(id);
-		return article.get();
+		return article.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 }
