@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+import com.davr7.springcrud.dtos.StudentRequestDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -34,6 +35,13 @@ public class Student extends DateAudit {
 	private List<Article> writtenArticles = new LinkedList<>();
 	
 	public Student() {
+	}
+	
+	public Student(StudentRequestDTO stuRequest) {
+		this.fullname = stuRequest.fullname();
+		this.email = stuRequest.email();
+		this.phone = stuRequest.phone();
+		this.password = stuRequest.password();
 	}
 	
 	public Student(Long id, String fullname, String email, String phone, String password) {
