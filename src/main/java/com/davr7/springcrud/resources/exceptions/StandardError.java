@@ -2,16 +2,16 @@ package com.davr7.springcrud.resources.exceptions;
 
 import java.time.Instant;
 
-public class AbstractError {
+public class StandardError {
 	protected Instant timestamp;
 	protected String path;
 	protected Integer statusCode;
 	protected String error;
 	
-	public AbstractError() {
+	public StandardError() {
 	}
 
-	public AbstractError(Instant timestamp, String path, Integer statusCode, String error) {
+	public StandardError(Instant timestamp, String path, Integer statusCode, String error) {
 		this.timestamp = timestamp;
 		this.path = path;
 		this.statusCode = statusCode;
