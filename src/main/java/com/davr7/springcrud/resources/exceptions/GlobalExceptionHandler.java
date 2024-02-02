@@ -23,8 +23,7 @@ public class GlobalExceptionHandler {
 		Integer status = HttpStatus.NOT_FOUND.value();
 		String error = "Resource Not Found";
 
-		ErrorResponse errResponse = new ErrorResponse(Instant.now(), status, error, e.getMessage(),
-				req.getRequestURI());
+		ErrorResponse errResponse = new ErrorResponse(Instant.now(), req.getRequestURI(), status, error, e.getMessage());
 		return ResponseEntity.status(status).body(errResponse);
 	}
 
@@ -34,8 +33,7 @@ public class GlobalExceptionHandler {
 		Integer status = HttpStatus.BAD_REQUEST.value();
 		String error = "Existing Resource";
 
-		ErrorResponse errResponse = new ErrorResponse(Instant.now(), status, error, e.getMessage(),
-				req.getRequestURI());
+		ErrorResponse errResponse = new ErrorResponse(Instant.now(), req.getRequestURI(), status, error, e.getMessage());
 		return ResponseEntity.status(status).body(errResponse);
 	}
 
@@ -43,7 +41,7 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<ErrorResponse2> handlerValidationExceptions(MethodArgumentNotValidException e, HttpServletRequest req) {
 		Integer status = HttpStatus.BAD_REQUEST.value();
 		String error = "Validation Failure";
-		ErrorResponse2 errResponse = new ErrorResponse2(Instant.now(), status, error, req.getRequestURI());
+		ErrorResponse2 errResponse = new ErrorResponse2(Instant.now(), req.getRequestURI(), status, error);
 		
 		e.getBindingResult().getAllErrors().forEach((err) -> {
 			String fieldName = ((FieldError) err).getField();
