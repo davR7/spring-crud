@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.davr7.springcrud.dtos.StudentRequestDTO;
 import com.davr7.springcrud.entities.Student;
 import com.davr7.springcrud.services.StudentService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "students")
@@ -38,7 +41,7 @@ public class StudentResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Student> createStudent(@RequestBody Student obj){
+	public ResponseEntity<Student> createStudent(@Valid @RequestBody StudentRequestDTO obj){
 		Student student = service.createStudent(obj);
 		
 		URI location = ServletUriComponentsBuilder
@@ -51,7 +54,7 @@ public class StudentResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student obj) {
+	public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody StudentRequestDTO obj) {
 		Student student = service.updateStudent(id, obj);
 		return ResponseEntity.ok().body(student);
 	}
