@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.davr7.springcrud.dtos.StudentRequestDTO;
 import com.davr7.springcrud.entities.Student;
 import com.davr7.springcrud.repositories.StudentRepository;
 import com.davr7.springcrud.services.exceptions.ExistingResourceException;
@@ -33,24 +34,24 @@ public class StudentService {
 		return repository.existsByEmail(email);
 	}
 
-	public Student createStudent(Student obj) {
+	public Student createStudent(StudentRequestDTO obj) {
 		try {
-			if (studentAlreadyExists(obj.getEmail())) {
+			if (studentAlreadyExists(obj.email())) {
 				throw new EntityExistsException();
 			}
-			return repository.save(obj);
+			return repository.save(new Student(obj));
 		} catch(EntityExistsException e) {
-			throw new ExistingResourceException(obj.getEmail());
+			throw new ExistingResourceException(obj.email());
 		}
 	}
 
-	public Student updateStudent(Long id, Student obj) {
+	public Student updateStudent(Long id, StudentRequestDTO obj) {
 		try {
 			Student entity = repository.getReferenceById(id);
-			entity.setFullname(obj.getFullname());
-			entity.setEmail(obj.getEmail());
-			entity.setPhone(obj.getPhone());
-			entity.setPassword(obj.getPassword());
+			entity.setFullname(obj.fullname());
+			entity.setEmail(obj.email());
+			entity.setPhone(obj.phone());
+			entity.setPassword(obj.password());
 			return repository.save(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
