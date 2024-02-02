@@ -4,37 +4,18 @@ import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ErrorResponse2 {
-	private Instant timestamp;
-	private Integer statusCode;
-	private String error;
+public class ErrorResponse2 extends StandardError {
 	private Map<String, String> details = new HashMap<>();
-	private String path;
 	
-	public ErrorResponse2(Instant timestamp, Integer statusCode, String error, String path) {
-		this.timestamp = timestamp;
-		this.statusCode = statusCode;
-		this.error = error;
-		this.path = path;
+	public ErrorResponse2() {
+		super();
 	}
 
-	public Instant getTimestamp() {
-		return timestamp;
-	}
-
-	public Integer getStatusCode() {
-		return statusCode;
-	}
-
-	public String getError() {
-		return error;
+	public ErrorResponse2(Instant timestamp, String path, Integer statusCode, String error) {
+		super(timestamp, path, statusCode, error);
 	}
 
 	public Map<String, String> getDetails() {
 		return details;
-	}
-
-	public String getPath() {
-		return path;
 	}
 }
