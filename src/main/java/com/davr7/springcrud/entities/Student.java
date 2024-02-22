@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-import com.davr7.springcrud.dtos.StudentRequestDTO;
+import com.davr7.springcrud.dtos.StudentDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -25,9 +25,7 @@ public class Student extends DateAudit {
 	private Long id;
 	private String fullname;
 	private String email;
-	@JsonIgnore
 	private String phone;
-	@JsonIgnore
 	private String password;
 	
 	@OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
@@ -37,7 +35,7 @@ public class Student extends DateAudit {
 	public Student() {
 	}
 	
-	public Student(StudentRequestDTO stuRequest) {
+	public Student(StudentDTO stuRequest) {
 		this.fullname = stuRequest.fullname();
 		this.email = stuRequest.email();
 		this.phone = stuRequest.phone();
