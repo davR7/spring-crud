@@ -2,11 +2,13 @@ package com.davr7.springcrud.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.davr7.springcrud.dtos.StudentRequestDTO;
+import com.davr7.springcrud.dtos.StudentDTO;
+import com.davr7.springcrud.dtos.StudentResDTO;
 import com.davr7.springcrud.entities.Student;
 import com.davr7.springcrud.repositories.StudentRepository;
 import com.davr7.springcrud.services.exceptions.ExistingResourceException;
@@ -21,38 +23,46 @@ public class StudentService {
 	@Autowired
 	private StudentRepository repository;
 
-	public List<Student> readAllStudents() {
-		return repository.findAll();
+	public List<StudentResDTO> readAllStudents() {
+		List<Student> list = repository.findAll();
+		return list.stream()
+				.map(s -> StudentResDTO.create(s))
+				.collect(Collectors.toList());
 	}
 
-	public Student readStudentById(Long id) {
+	public StudentResDTO readStudentById(Long id) {
 		Optional<Student> student = repository.findById(id);
-		return student.orElseThrow(() -> new ResourceNotFoundException(id));
+		return StudentResDTO.create(student.orElseThrow(() -> new ResourceNotFoundException(id)));
 	}
 
 	public Boolean studentAlreadyExists(String email) {
 		return repository.existsByEmail(email);
 	}
 
-	public Student createStudent(StudentRequestDTO obj) {
+	public StudentResDTO createStudent(StudentDTO obj) {
 		try {
 			if (studentAlreadyExists(obj.email())) {
 				throw new EntityExistsException();
 			}
-			return repository.save(new Student(obj));
+			
+			Student savedUser = repository.save(new Student(obj));
+			return StudentResDTO.create(savedUser);
 		} catch(EntityExistsException e) {
 			throw new ExistingResourceException(obj.email());
 		}
 	}
 
-	public Student updateStudent(Long id, StudentRequestDTO obj) {
+	public StudentResDTO updateStudent(Long id, StudentDTO obj) {
 		try {
 			Student entity = repository.getReferenceById(id);
+			
 			entity.setFullname(obj.fullname());
 			entity.setEmail(obj.email());
 			entity.setPhone(obj.phone());
 			entity.setPassword(obj.password());
-			return repository.save(entity);
+			
+			Student savedUser = repository.save(entity);
+			return StudentResDTO.create(savedUser);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundException(id);
 		}
