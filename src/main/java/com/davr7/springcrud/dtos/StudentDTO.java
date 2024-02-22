@@ -4,7 +4,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public record StudentRequestDTO(
+public record StudentDTO(
 		@NotBlank(message = "Fullname is mandatory") 
 		String fullname, 
 		@NotBlank(message = "Email is mandatory")
