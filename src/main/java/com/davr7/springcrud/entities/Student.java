@@ -29,17 +29,16 @@ public class Student extends DateAudit {
 	private String password;
 	
 	@OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-	@JsonIgnore
 	private List<Article> writtenArticles = new LinkedList<>();
 	
 	public Student() {
 	}
 	
-	public Student(StudentDTO stuRequest) {
-		this.fullname = stuRequest.fullname();
-		this.email = stuRequest.email();
-		this.phone = stuRequest.phone();
-		this.password = stuRequest.password();
+	public Student(StudentDTO st) {
+		this.fullname = st.fullname();
+		this.email = st.email();
+		this.phone = st.phone();
+		this.password = st.password();
 	}
 	
 	public Student(Long id, String fullname, String email, String phone, String password) {
