@@ -31,6 +31,7 @@ GET /articles/{id} - Recuperar um dado.
 - spring-boot-starter-data-jpa
 - spring-boot-starter-web
 - h2 (com.h2database)
+- postgresql
 - spring-boot-starter-test
 - spring-boot-starter-validation
 
