@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.davr7.springcrud.dtos.StudentRequestDTO;
-import com.davr7.springcrud.entities.Student;
+import com.davr7.springcrud.dtos.StudentDTO;
+import com.davr7.springcrud.dtos.StudentResDTO;
 import com.davr7.springcrud.services.StudentService;
 
 import jakarta.validation.Valid;
@@ -29,33 +29,33 @@ public class StudentResource {
 	private StudentService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Student>> readAllStudents(){
-		List<Student> students = service.readAllStudents();
+	public ResponseEntity<List<StudentResDTO>> readAllStudents(){
+		List<StudentResDTO> students = service.readAllStudents();
 		return ResponseEntity.ok().body(students);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Student> readStudentById(@PathVariable Long id){
-		Student student = service.readStudentById(id);
+	public ResponseEntity<StudentResDTO> readStudentById(@PathVariable Long id){
+		StudentResDTO student = service.readStudentById(id);
 		return ResponseEntity.ok().body(student);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Student> createStudent(@Valid @RequestBody StudentRequestDTO obj){
-		Student student = service.createStudent(obj);
+	public ResponseEntity<StudentResDTO> createStudent(@Valid @RequestBody StudentDTO obj){
+		StudentResDTO student = service.createStudent(obj);
 		
 		URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(student.getId())
+                .buildAndExpand(student.id())
                 .toUri();
 		
 		return ResponseEntity.created(location).body(student);
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody StudentRequestDTO obj) {
-		Student student = service.updateStudent(id, obj);
+	public ResponseEntity<StudentResDTO> updateStudent(@PathVariable Long id, @RequestBody StudentDTO obj) {
+		StudentResDTO student = service.updateStudent(id, obj);
 		return ResponseEntity.ok().body(student);
 	}
 	
