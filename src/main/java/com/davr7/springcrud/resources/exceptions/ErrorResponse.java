@@ -1,5 +1,7 @@
 package com.davr7.springcrud.resources.exceptions;
 
+import com.davr7.springcrud.common.StandardError;
+
 import java.time.Instant;
 
 public class ErrorResponse extends StandardError {
