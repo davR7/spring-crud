@@ -1,4 +1,4 @@
-package com.davr7.springcrud.resources.exceptions;
+package com.davr7.springcrud.common;
 
 import java.time.Instant;
 
