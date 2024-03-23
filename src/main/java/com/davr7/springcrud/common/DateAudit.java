@@ -1,4 +1,4 @@
-package com.davr7.springcrud.entities;
+package com.davr7.springcrud.common;
 
 import java.io.Serializable;
 import java.time.Instant;
