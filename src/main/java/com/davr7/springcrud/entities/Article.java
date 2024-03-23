@@ -2,6 +2,7 @@ package com.davr7.springcrud.entities;
 
 import java.util.Objects;
 
+import com.davr7.springcrud.common.DateAudit;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

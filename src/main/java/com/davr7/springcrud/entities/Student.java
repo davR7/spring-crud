@@ -4,8 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+import com.davr7.springcrud.common.DateAudit;
 import com.davr7.springcrud.dtos.StudentDTO;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
